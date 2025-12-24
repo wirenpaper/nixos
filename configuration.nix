@@ -113,14 +113,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #google-chrome
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
     git
-    #gedit
-    #nautilus
-    #libreoffice-fresh
+    pciutils # hardware debugging (lspci)
+    usbutils # hardware debugging (lsusb)
   ];
 
   fonts.packages = with pkgs; [

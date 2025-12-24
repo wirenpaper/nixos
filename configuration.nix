@@ -90,13 +90,7 @@
     variant = "";
   };
 
-  programs.zsh = {
-    enable = true;
-    promptInit = "";
-    interactiveShellInit = ''
-      ${builtins.readFile ./extra_zsh_config.zsh}
-    '';
-  };
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -121,31 +115,11 @@
     gedit
     nautilus
     libreoffice-fresh
-    ghostty
-
-    liberation_ttf
-
-    (st.overrideAttrs (oldAttrs: {
-      postPatch = ''
-      sed -i 's/^static char \*font =.*/static char *font = "Liberation Mono:size=24";/' config.def.h
-      '';
-    }))
-
   ];
 
   fonts.packages = with pkgs; [
     ultimate-oldschool-pc-font-pack
   ];
-
-  #programs.ghostty = {
-  #  enable = true;
-  #  settings = {
-  #    font-family = "PxPlus IBM VGA8";
-  #    font-size = 22;
-  #  };
-  #};
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

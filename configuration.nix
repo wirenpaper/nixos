@@ -27,6 +27,20 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   services.keyd = {
     enable = true;
     keyboards.default = {
@@ -50,15 +64,7 @@
   services.xserver = {
     enable = true;
     displayManager.lightdm.enable = true;
-    
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-      ];
-    };
+    windowManager.i3.enable = true;
   };
 
   console = {
@@ -67,21 +73,21 @@
   };
 
   # Set your time zone.
-  time.timeZone = "Indian/Maldives";
+  time.timeZone = "Asia/Karachi";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "dv_MV";
-    LC_IDENTIFICATION = "dv_MV";
-    LC_MEASUREMENT = "dv_MV";
-    LC_MONETARY = "dv_MV";
-    LC_NAME = "dv_MV";
-    LC_NUMERIC = "dv_MV";
-    LC_PAPER = "dv_MV";
-    LC_TELEPHONE = "dv_MV";
-    LC_TIME = "dv_MV";
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
   # Configure keymap in X11
@@ -97,7 +103,7 @@
   users.users.saifr = {
     isNormalUser = true;
     description = "Mustapha Rashiduddin";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
     packages = with pkgs; [];
   };
 
@@ -107,14 +113,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    google-chrome
+    #google-chrome
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
     git
-    gedit
-    nautilus
-    libreoffice-fresh
+    #gedit
+    #nautilus
+    #libreoffice-fresh
   ];
 
   fonts.packages = with pkgs; [

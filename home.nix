@@ -1,20 +1,19 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
-    vim
     google-chrome
     gedit
     nautilus
     libreoffice-fresh
     dmenu
-    # i3status
     i3lock
     pamixer
     networkmanagerapplet
     volctl
+    xclip
   ];
 
   # 2. Add the i3status configuration module
@@ -71,6 +70,22 @@
       font-size = 22;
       window-decoration = false;
     };
+  };
+  
+  # THIS IS THE NIX WAY for a whole folder
+  xdg.configFile."nvim" = {
+    source = ./nvim-config;
+    recursive = true; # Ensures subfolders like /lua or /after are handled
+  };
+
+  programs.neovim = {
+    enable = true;
+
+    # key line
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+    viAlias = true;
+    vimAlias = true;
   };
 
   home.file.".config/i3/config".text = builtins.readFile ./i3-config;

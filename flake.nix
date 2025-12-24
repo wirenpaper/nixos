@@ -9,15 +9,18 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Add this: The nightly Neovim source
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
+	{ nixpkgs.hostPlatform = "x86_64-linux"; }        
+
         ./configuration.nix
-        
         # Import the home-manager nixos module
         home-manager.nixosModules.home-manager
         {

@@ -9,11 +9,13 @@
     libreoffice-fresh
     dmenu
     i3lock
+    brightnessctl
     pamixer
     networkmanagerapplet
     pnmixer
     adwaita-icon-theme
     hicolor-icon-theme
+    pamixer
     xclip
   ];
 

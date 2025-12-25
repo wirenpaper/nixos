@@ -4,7 +4,6 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
-    google-chrome
     gedit
     nautilus
     libreoffice-fresh
@@ -12,9 +11,43 @@
     i3lock
     pamixer
     networkmanagerapplet
-    volctl
+    pnmixer
+    adwaita-icon-theme
+    hicolor-icon-theme
     xclip
   ];
+
+  # This configures volumeicon to show a slider and use your mixer
+  xdg.configFile."volumeicon/volumeicon".text = ''
+    [Alsa]
+    card=default
+
+    [StatusIcon]
+    stepsize=5
+    # This makes left-click show the slider
+    lmb_slider=true
+    # This makes middle-click mute
+    mmb_mute=true
+    # This opens your pro mixer on right-click
+    rclick_command=pavucontrol
+  '';
+
+  home.pointerCursor = {
+   gtk.enable = true;
+   # x11.enable is critical for i3 to see the change
+   x11.enable = true;
+   package = pkgs.vanilla-dmz;
+   name = "Vanilla-DMZ";
+   size = 48; # Standard is 16/24. Try 48 or 64 for a big cursor.
+  };
+
+
+  programs.google-chrome = {
+    enable = true;
+    commandLineArgs = [
+      "--force-device-scale-factor=1.2" # 1.5 = 150% zoom.
+    ];
+  };
 
   # 2. Add the i3status configuration module
   programs.i3status = {
@@ -69,6 +102,7 @@
       font-family = "PxPlus IBM VGA 8x16";
       font-size = 22;
       window-decoration = false;
+      cursor-invert-fg-bg = true;
     };
   };
   

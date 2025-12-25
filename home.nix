@@ -4,7 +4,7 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
-    gedit
+    gedit # keep until neovim is stable
     nautilus
     libreoffice-fresh
     dmenu
@@ -16,6 +16,8 @@
     adwaita-icon-theme
     hicolor-icon-theme
     pamixer
+    pavucontrol
+    alsa-utils
     xclip
   ];
 
@@ -84,7 +86,7 @@
         position = 10; # Usually at the end
         settings = {
           # %d = Day, %A = Weekday, %m = Month, %Y = Year
-          format = "%d{%A}/%m/%Y %H:%M:%S"; 
+          format = "{ %A } %d/%m/%Y %H:%M:%S"; 
         };
       };
     };

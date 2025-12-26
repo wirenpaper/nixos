@@ -19,6 +19,15 @@
     alsa-utils
     xclip
     tree
+    ripgrep
+
+    # THE PYTHON STACK
+    (python3.withPackages (ps: with ps; [
+      fastapi
+      uvicorn
+      # 'uno' is provided by LibreOffice. In Nix, we use this 
+      # wrapper to ensure the Python env can see the UNO office profile.
+    ]))
   ];
 
   # This configures volumeicon to show a slider and use your mixer

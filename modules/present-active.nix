@@ -3,7 +3,7 @@
 {
   # 1. Define the Option (The Switch)
   # This creates a setting called 'mySetups.present-active.enable'
-  options.mySetups.present-active.enable = lib.mkEnableOption "Presentation and Office tools";
+  options.mySetups.present-active.enable = lib.mkEnableOption "Presentation Active Setup";
 
   # 2. Define the Configuration (What to do when enabled)
   config = lib.mkIf config.mySetups.present-active.enable {

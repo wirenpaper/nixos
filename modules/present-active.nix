@@ -11,5 +11,21 @@
     environment.systemPackages = with pkgs; [
       libreoffice-fresh
     ];
+    # We define the path once here as a local variable inside the config block
+    environment.variables =
+      let
+        # This finds the actual folder where uno.py and pyuno.so live
+        # We use pkgs.libreoffice-fresh directly
+        officePath = "${pkgs.libreoffice-fresh}/lib/libreoffice/program";
+      in {
+        # 1. Tells Python where to find uno.py
+        PYTHONPATH = [ "${officePath}" ];
+
+        # 2. The critical "Soul" of the Office bridge
+        URE_BOOTSTRAP = "vnd.sun.star.pathname:${officePath}/fundamentalrc";
+
+        # 3. Tells the system where the C++ 'muscles' (shared libraries) are
+        LD_LIBRARY_PATH = [ "${officePath}" ];
+      };
   };
 }

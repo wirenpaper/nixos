@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     gedit # keep until neovim is stable
     nautilus
-    libreoffice-fresh
     dmenu
     i3lock
     brightnessctl
@@ -19,6 +18,7 @@
     pavucontrol
     alsa-utils
     xclip
+    tree
   ];
 
   # This configures volumeicon to show a slider and use your mixer

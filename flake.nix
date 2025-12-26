@@ -15,21 +15,21 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.computer1 = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-	{ nixpkgs.hostPlatform = "x86_64-linux"; }        
+        # 1. Point to the host-specific configuration
+        ./hosts/computer1/configuration.nix 
 
-        ./configuration.nix
-        # Import the home-manager nixos module
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-	  home-manager.backupFileExtension = "backup";
+          home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = { inherit inputs; };
-          # This points to a new section we will add to configuration.nix
-          home-manager.users.saifr = import ./home.nix;
+          
+          # 2. Point to the shared home settings
+          home-manager.users.saifr = import ./common/home.nix;
         }
       ];
     };

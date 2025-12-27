@@ -4,7 +4,6 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
-    xvfb-run
     gedit # keep until neovim is stable
     nautilus
     dmenu

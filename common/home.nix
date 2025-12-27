@@ -4,6 +4,7 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    slack
     gedit # keep until neovim is stable
     nautilus
     dmenu

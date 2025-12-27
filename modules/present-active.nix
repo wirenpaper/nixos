@@ -11,6 +11,10 @@
       prefixLength = 24;
     }];
 
+    programs.zsh.shellAliases = {
+      slides = "python ~/rnd/slides_server/ignition.py";
+    };
+
     #networking.defaultGateway = "192.168.100.1";
     networking.defaultGateway = {
       address = "192.168.100.1";

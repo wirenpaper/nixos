@@ -10,10 +10,6 @@
   
   mySetups.present-active.enable = true;
   
-  # Later, you can add more here:
-  # mySetups.gaming.enable = true;
-  # mySetups.creative-tools.enable = true;
-
   # You can also put settings here that every workstation should have
   # but a server shouldn't (like a PDF viewer or Printing support)
   services.printing.enable = true;

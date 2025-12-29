@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "81WA-x86-64"; 
+  networking.hostName = "saif-lenovo"; 
   services.printing.enable = true;
 
   imports = [

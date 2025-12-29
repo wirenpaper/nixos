@@ -17,14 +17,14 @@
     nixosConfigurations = {
 
       # --- ENTRY 1: Your Current Machine ---
-      "81WA-x86-64" = nixpkgs.lib.nixosSystem {
+      "saif-lenovo" = nixpkgs.lib.nixosSystem {
         
         # Pass inputs so your modules can access neovim-nightly
         specialArgs = { inherit inputs; };
         
         modules = [
           # 1. The Hardware/Host Config (Drivers, specific modules)
-          ./hosts/81WA-x86-64/configuration.nix 
+          ./hosts/saif-lenovo/configuration.nix 
 
           # 2. The User/System Config (Everything else + Home Manager)
           ./users/saifr/configuration.nix

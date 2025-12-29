@@ -16,26 +16,23 @@
     
     nixosConfigurations = {
 
-      # --- ENTRY 1: Your Current Machine ---
       "saif-lenovo" = nixpkgs.lib.nixosSystem {
-        
-        # Pass inputs so your modules can access neovim-nightly
         specialArgs = { inherit inputs; };
         
         modules = [
-          # 1. The Hardware/Host Config (Drivers, specific modules)
           ./hosts/saif-lenovo/configuration.nix 
-
-          # 2. The User/System Config (Everything else + Home Manager)
           ./users/saifr/configuration.nix
         ];
       };
 
-      # --- Future machines just look like this: ---
-      # "thinkpad" = nixpkgs.lib.nixosSystem {
-      #   specialArgs = { inherit inputs; };
-      #   modules = [ ./hosts/thinkpad/configuration.nix ./users/saifr/configuration.nix ];
-      # };
+      "saif-thinkpad" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        
+        modules = [
+          ./hosts/saif-thinkpad/configuration.nix 
+          ./users/saifr/configuration.nix
+        ];
+      };
 
     };
   };

@@ -14,17 +14,18 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
-    let
-      # --- THE ONLY PLACE YOU EVER CHANGE THE NAME ---
-      host = "81WA-x86-64";
-      # -----------------------------------------------
-    in {
-      nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+    
+    # THE PHONEBOOK
+    nixosConfigurations = {
+
+      # --- ENTRY 1: Your Current Machine ---
+      "81WA-x86-64" = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
+        
         modules = [
-          # This automatically points to ./hosts/81WA_x86_64/configuration.nix
-          ./hosts/${host}/configuration.nix 
+          # Hardcoded path to match the current folder structure
+          ./hosts/81WA-x86-64/configuration.nix 
 
           home-manager.nixosModules.home-manager
           {
@@ -37,5 +38,10 @@
           }
         ];
       };
+
+      # --- ENTRY 2: Future machines can be added here ---
+      # "thinkpad" = ...
+
     };
+  };
 }

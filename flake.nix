@@ -34,7 +34,7 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
             
-            home-manager.users.saifr = import ./common/home.nix;
+            home-manager.users.saifr = import ./users/saifr/home.nix;
           }
         ];
       };

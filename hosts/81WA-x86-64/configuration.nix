@@ -1,12 +1,14 @@
 { config, pkgs, ... }:
 
 {
+  networking.hostName = "81WA-x86-64"; 
+  services.printing.enable = true;
+
   imports = [
     ./hardware-configuration.nix       # Points to the file in the same folder
     ../../common/configuration.nix     # Points back to the shared common folder
-    ../../common/profiles/workstation.nix
+    ../../modules
   ];
 
-  # You can keep this computer-specific if you want, or leave it in common
-  networking.hostName = "81WA-x86-64"; 
+  mySetups.present-active.enable = true;
 }

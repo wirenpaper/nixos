@@ -1,26 +1,24 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  # Bootloader.
+  # 1. Import Home Manager so we can use it below
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
+  # ================================================================
+  # SYSTEM SETTINGS (Boot, Net, Time - Specific to Saifr's setup)
+  # ================================================================
+
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  # Networking
   networking.networkmanager.enable = true;
-
+  
+  # Audio
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -28,58 +26,24 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
   services.avahi = {
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
   };
 
+  # Maintenance
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
-
   nix.settings.auto-optimise-store = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  services.keyd = {
-    enable = true;
-    keyboards.default = {
-      settings = {
-        main = {
-          capslock = "layer(control)";
-          escape = "capslock";
-	  tab = "layer(meta)";
-	  enter = "layer(meta)";
-        };
-	control = {
-	  j = "enter";
-	  h = "backspace";
-	  i = "tab";
-	  leftbrace = "escape";
-	};
-      };
-    };
-  };
-
-  services.xserver = {
-    enable = true;
-    displayManager.lightdm.enable = true;
-    windowManager.i3.enable = true;
-  };
-
-  console = {
-    packages = with pkgs; [ terminus_font ];
-    font = "ter-v32b";
-  };
-
-  # Set your time zone.
+  # Time & Locale (Kept here as requested)
   time.timeZone = "Asia/Karachi";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -92,73 +56,87 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  # ================================================================
+  # USER & DESKTOP (Saifr's Rice)
+  # ================================================================
+
+  # Keyboard Remapping
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      settings = {
+        main = {
+          capslock = "layer(control)";
+          escape = "capslock";
+          tab = "layer(meta)";
+          enter = "layer(meta)";
+        };
+        control = {
+          j = "enter";
+          h = "backspace";
+          i = "tab";
+          leftbrace = "escape";
+        };
+      };
+    };
   };
 
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  # Graphical Environment
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us";
+    xkb.variant = "";
+    displayManager.lightdm.enable = true;
+    windowManager.i3.enable = true;
+  };
 
+  # Aesthetics
   programs.dconf.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.saifr = {
-    isNormalUser = true;
-    description = "Mustapha Rashiduddin";
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
-    packages = with pkgs; [];
+  console = {
+    packages = with pkgs; [ terminus_font ];
+    font = "ter-v32b";
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget
-    curl
-    git
-    pciutils # hardware debugging (lspci)
-    usbutils # hardware debugging (lsusb)
-    killall
-  ];
-
   fonts.packages = with pkgs; [
     ultimate-oldschool-pc-font-pack
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Shell
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
 
-  # List services that you want to enable:
+  # User Definition
+  users.users.saifr = {
+    isNormalUser = true;
+    description = "Mustapha Rashiduddin";
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" "docker" ];
+    packages = with pkgs; [];
+  };
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # Packages & Licenses
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    wget
+    curl
+    git
+    pciutils 
+    usbutils 
+    killall
+  ];
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # ================================================================
+  # HOME MANAGER BRIDGE (The new part)
+  # ================================================================
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
+    
+    # Pass inputs so home.nix can see neovim-nightly
+    extraSpecialArgs = { inherit inputs; };
+    
+    # Point to the home.nix in this folder
+    users.saifr = import ./home.nix;
+  };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-
-  # Enable Flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-
-  system.stateVersion = "25.11"; # Did you read the comment?
-
+  system.stateVersion = "25.11"; 
 }

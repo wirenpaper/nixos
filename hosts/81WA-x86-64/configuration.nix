@@ -5,8 +5,8 @@
   services.printing.enable = true;
 
   imports = [
-    ./hardware-configuration.nix       # Points to the file in the same folder
-    ../../users/saifr/configuration.nix     # Points back to the shared common folder
+    ./hardware-configuration.nix
+    ../../users/saifr/configuration.nix
     ../../modules
   ];
 

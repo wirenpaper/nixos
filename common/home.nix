@@ -116,7 +116,10 @@
       font-family = "PxPlus IBM VGA 8x16";
       font-size = 22;
       window-decoration = false;
-      cursor-invert-fg-bg = true;
+      cursor-invert-fg-bg = false;
+      cursor-color = "cell-foreground";
+      cursor-text = "cell-background";
+      cursor-style = "block";
     };
   };
   

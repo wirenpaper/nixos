@@ -115,6 +115,7 @@
   # Packages & Licenses
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+    maim
     wget
     curl
     git

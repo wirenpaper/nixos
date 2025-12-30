@@ -74,7 +74,26 @@
     modules = {
       "ipv6".enable = false;
       "wireless _first_".enable = false; # Set to true if you use Wi-Fi
-      "battery all".enable = false;      # Set to true if on a laptop
+      #"battery all".enable = false;      # Set to true if on a laptop
+      "battery all" = {
+        enable = true;
+        position = 9; # 9 puts it right between Volume (8) and Date (10)
+        settings = {
+          # %status shows charging/discharging, %percentage is the number
+          # %remaining shows time left (e.g., 2h 30m)
+          format = "%status %percentage %remaining";
+          
+          # Optional: Customize the status symbols
+          status_chr = "⚡ CHR";  # Charging
+          status_bat = "🔋 BAT";  # Discharging
+          status_unk = "? UNK";   # Unknown
+          status_full = "☻ FULL"; # Full
+          
+          # Alert when battery is low (red color)
+          low_threshold = 15;
+          threshold_type = "percentage";
+        };
+      };
       "disk /".settings.format = "%avail";
       "load".settings.format = "%1min";
       "memory".settings.format = "%used | %available";

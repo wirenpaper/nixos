@@ -1,5 +1,8 @@
 { config, pkgs, inputs, ... }:
 
+let 
+  qwen-agent = import ./qwen-agent.nix { inherit pkgs; };
+in
 {
   home.stateVersion = "25.11";
 
@@ -26,8 +29,10 @@
     (python3.withPackages (ps: with ps; [
       fastapi
       uvicorn
-      # 'uno' is provided by LibreOffice. In Nix, we use this 
-      # wrapper to ensure the Python env can see the UNO office profile.
+      sympy
+      ollama
+      qwen-agent # what a drag
+      pypdf
     ]))
   ];
 

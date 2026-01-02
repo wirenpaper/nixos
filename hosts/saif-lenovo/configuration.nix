@@ -11,4 +11,5 @@
   ];
 
   mySetups.present-active.enable = true;
+  mySetups.ollama.enable = true;
 }

@@ -155,15 +155,16 @@
     "x-transformers-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1766756757,
-        "narHash": "sha256-xcmyErz9wOXKBWY2If8Lg5Z3TJI2V26DKfdnvUumqOA=",
+        "lastModified": 1647366440,
+        "narHash": "sha256-YgbUVL26nljTaN2TrpFJnz2JunWDScurF2RwIT9GcNY=",
         "owner": "lucidrains",
         "repo": "x-transformers",
-        "rev": "4885af88cf436c40ff94ecfbcddaa686e13b0e01",
+        "rev": "c1b780eb01b1834309e822bb57a2093bb4a7bc4f",
         "type": "github"
       },
       "original": {
         "owner": "lucidrains",
+        "ref": "0.25.4",
         "repo": "x-transformers",
         "type": "github"
       }

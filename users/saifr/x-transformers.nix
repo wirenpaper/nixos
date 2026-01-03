@@ -2,21 +2,20 @@
 
 let
   ps = pkgs.python3Packages;
+  entmax = import ./entmax.nix { inherit pkgs; };
 in
 ps.buildPythonPackage {
   pname = "x-transformers";
-  version = "latest";
+  version = "0.25.4";
   inherit src;
 
   pyproject = true;
-  # Uses Hatchling to build - standard for modern Lucidrains packages
-  build-system = [ ps.hatchling ps.hatch-vcs ];
+  build-system = [ ps.setuptools ps.wheel ];
 
-  propagatedBuildInputs = with ps; [
-    torch
-    einops
-    einx
-    loguru
+  propagatedBuildInputs = [
+    ps.torch
+    ps.einops
+    entmax
   ];
 
   doCheck = false;

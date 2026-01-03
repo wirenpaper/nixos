@@ -2,13 +2,27 @@
 
 let 
   qwen-agent = import ./qwen-agent.nix { inherit pkgs; };
+  
+  # 1. Build x-transformers from its flake source
+  x-transformers = import ./x-transformers.nix { 
+    inherit pkgs; 
+    src = inputs.x-transformers-src; 
+  };
+  
+  # 2. Build pix2tex and PASS the x-transformers we just built into it
+  pix2tex = import ./pix2tex.nix { 
+    inherit pkgs x-transformers; 
+    src = inputs.pix2tex-src; 
+  };
 in
 {
+  # THIS MUST BE HERE AT THE TOP LEVEL
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    xdg-utils
     slack
-    gedit # keep until neovim is stable
+    gedit
     nautilus
     dmenu
     i3lock
@@ -18,7 +32,6 @@ in
     pnmixer
     adwaita-icon-theme
     hicolor-icon-theme
-    pamixer
     pavucontrol
     alsa-utils
     xclip
@@ -31,8 +44,9 @@ in
       uvicorn
       sympy
       ollama
-      qwen-agent # what a drag
+      qwen-agent
       pypdf
+      pix2tex # It now has x-transformers "baked in"
     ]))
   ];
 

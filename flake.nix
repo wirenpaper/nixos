@@ -11,6 +11,9 @@
     };
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
+    pix2tex-src = { url = "github:lukas-blecher/LaTeX-OCR"; flake = false; };
+    x-transformers-src = { url = "github:lucidrains/x-transformers"; flake = false; };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {

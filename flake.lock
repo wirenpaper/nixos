@@ -126,47 +126,12 @@
         "type": "github"
       }
     },
-    "pix2tex-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737213823,
-        "narHash": "sha256-tzfvJaE9UJe9Fy/eTMczJaMbk8qfSrqWvriVKO7+SKQ=",
-        "owner": "lukas-blecher",
-        "repo": "LaTeX-OCR",
-        "rev": "5c1ac929bd19a7ecf86d5fb8d94771c8969fcb80",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lukas-blecher",
-        "repo": "LaTeX-OCR",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "pix2tex-src": "pix2tex-src",
-        "x-transformers-src": "x-transformers-src"
-      }
-    },
-    "x-transformers-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1647366440,
-        "narHash": "sha256-YgbUVL26nljTaN2TrpFJnz2JunWDScurF2RwIT9GcNY=",
-        "owner": "lucidrains",
-        "repo": "x-transformers",
-        "rev": "c1b780eb01b1834309e822bb57a2093bb4a7bc4f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lucidrains",
-        "ref": "0.25.4",
-        "repo": "x-transformers",
-        "type": "github"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },

@@ -9,5 +9,5 @@
     ../../users/saifr/configuration.nix
     ../../modules
   ];
-
+  mySetups.ollama.enable = true;
 }

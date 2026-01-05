@@ -39,6 +39,8 @@ in
     sage
     fricas
 
+    gnome-calculator
+
     texliveFull
     rlwrap
     timg

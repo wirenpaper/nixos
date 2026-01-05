@@ -1,12 +1,8 @@
 vim.g.mapleader = ','
 vim.g.localleader = ','
 
---vim.opt.laststatus = 0
-
---vim.opt.termguicolors = false
-
---vim.cmd("set background=dark")
-vim.cmd.colorscheme('dark')
+-- vim.cmd.colorscheme('dark')
+vim.cmd.colorscheme('light')
 
 -- Tab Completion Settings
 vim.opt.wildignorecase = true -- Makes tab completion for files/buffers case-insensitive

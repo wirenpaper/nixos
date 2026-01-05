@@ -96,9 +96,23 @@
     packages = with pkgs; [ terminus_font ];
     font = "ter-v32b";
   };
-  fonts.packages = with pkgs; [
-    ultimate-oldschool-pc-font-pack
-  ];
+
+  fonts = {
+    packages = with pkgs; [
+      lmodern
+      cm_unicode
+      ultimate-oldschool-pc-font-pack
+      xorg.fontmiscmisc      # The 9x15 font
+      xorg.fontadobe100dpi   # Often needed for buttons
+      xorg.fontadobe75dpi    # Often needed for labels
+    ];
+    
+    # This is the "Magic Switch" that makes NixOS link these to X11
+    fontDir.enable = true;
+
+    # This allows the "Bitmap" fonts that modern systems usually ignore
+    fontconfig.allowBitmaps = true;
+  };
 
   # Shell
   programs.zsh.enable = true;

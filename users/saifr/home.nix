@@ -9,6 +9,7 @@ in
 
   home.packages = with pkgs; [
     xdg-utils
+    xwininfo
     slack
     gedit
     nautilus
@@ -25,8 +26,26 @@ in
     xclip
     tree
     ripgrep
+    xorg.xlsfonts
+    xorg.xset
+    xorg.fontmiscmisc
+    xhost
+    xeyes
+    file
+    xorg.libXpm
+
+    gnuplot
+
+    sage
     fricas
-    texmacs
+
+    texliveFull
+    rlwrap
+    timg
+    imagemagick
+    ghostscript
+    poppler-utils
+    inotify-tools
 
     # THE PYTHON STACK
     (python3.withPackages (ps: with ps; [
@@ -36,7 +55,6 @@ in
       ollama
       qwen-agent
       pypdf
-      #pix2tex # It now has x-transformers "baked in"
     ]))
   ];
 
@@ -68,7 +86,7 @@ in
   programs.google-chrome = {
     enable = true;
     commandLineArgs = [
-      "--force-device-scale-factor=1.2" # 1.5 = 150% zoom.
+      "--force-device-scale-factor=1.2" # 1.2 = 120% zoom.
     ];
   };
 
@@ -134,20 +152,31 @@ in
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
+    syntaxHighlighting.enable = false;
     initContent = builtins.readFile ./extra_zsh_config.zsh;
   };
 
   programs.ghostty = {
     enable = true;
     settings = {
-      font-family = "PxPlus IBM VGA 8x16";
+      #font-family = "Latin Modern Mono";
+      font-family = "CMU Typewriter Text";
       font-size = 22;
+      adjust-cell-height = -6;
+      font-thicken = true;
+      font-style = "Bold";
       window-decoration = false;
-      cursor-invert-fg-bg = false;
-      cursor-color = "cell-foreground";
-      cursor-text = "cell-background";
+      #cursor-invert-fg-bg = false;
       cursor-style = "block";
+      cursor-color = "#000000";
+      cursor-text = "#ffffff";
+
+      #"theme" = "Ayu Light";
+      background = "#fdf6e3";
+      foreground = "#444444";
+
+      "shell-integration" = "none";
+      "shell-integration-features" = "no-cursor";
     };
   };
   

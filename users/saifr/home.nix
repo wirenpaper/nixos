@@ -7,7 +7,15 @@ in
   # THIS MUST BE HERE AT THE TOP LEVEL
   home.stateVersion = "25.11";
 
+  home.shellAliases = {
+    theme = "~/.config/config-manager/theme.sh";
+  };
+
   home.packages = with pkgs; [
+    xdotool
+    gcc
+    nodejs
+    basedpyright
     xdg-utils
     xwininfo
     slack
@@ -33,6 +41,7 @@ in
     xeyes
     file
     xorg.libXpm
+    ghostty
 
     gnuplot
 
@@ -158,38 +167,51 @@ in
     initContent = builtins.readFile ./extra_zsh_config.zsh;
   };
 
-  programs.ghostty = {
-    enable = true;
-    settings = {
-      #font-family = "Latin Modern Mono";
-      font-family = "CMU Typewriter Text";
-      font-size = 22;
-      adjust-cell-height = -6;
-      font-thicken = true;
-      font-style = "Bold";
-      window-decoration = false;
-      #cursor-invert-fg-bg = false;
-      cursor-style = "block";
-      cursor-color = "#000000";
-      cursor-text = "#ffffff";
+  #programs.ghostty = {
+  #  enable = true;
+  #  settings = {
+  #    #font-family = "Latin Modern Mono";
+  #    font-family = "CMU Typewriter Text";
+  #    font-size = 22;
+  #    adjust-cell-height = -6;
+  #    font-thicken = true;
+  #    font-style = "Bold";
+  #    window-decoration = false;
+  #    #cursor-invert-fg-bg = false;
+  #    cursor-style = "block";
+  #    cursor-color = "#000000";
+  #    cursor-text = "#ffffff";
 
-      #"theme" = "Ayu Light";
-      background = "#fdf6e3";
-      foreground = "#444444";
+  #    #"theme" = "Ayu Light";
+  #    background = "#fdf6e3";
+  #    foreground = "#444444";
 
-      "shell-integration" = "none";
-      "shell-integration-features" = "no-cursor";
-    };
-  };
+  #    "shell-integration" = "none";
+  #    "shell-integration-features" = "no-cursor";
+  #  };
+  #};
   
   # THIS IS THE NIX WAY for a whole folder
-  xdg.configFile."nvim" = {
-    source = ./nvim-config;
-    recursive = true; # Ensures subfolders like /lua or /after are handled
-  };
+  #xdg.configFile."nvim" = {
+  #  source = ./nvim-config;
+  #  recursive = true; # Ensures subfolders like /lua or /after are handled
+  #};
 
   programs.neovim = {
     enable = true;
+
+    # This installs the Treesitter plugin AND the python/js parsers correctly compiled for NixOS
+    plugins = with pkgs.vimPlugins; [
+      (nvim-treesitter.withPlugins (p: [ 
+        p.c 
+        p.lua 
+        p.python 
+        p.javascript 
+        p.vim 
+        p.vimdoc 
+        p.query 
+      ]))
+    ];
 
     # key line
     package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;

@@ -1,0 +1,7 @@
+keys:
+  - &saif-thinkpad age14p24pn47dmryv6l208l988kl55zaffcskwk0e0h363knqa9dzgvqzvv3v5
+creation_rules:
+  - path_regex: secrets\.yaml$
+    key_groups:
+      - age:
+        - *saif-thinkpad

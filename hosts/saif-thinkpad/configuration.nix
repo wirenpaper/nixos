@@ -9,5 +9,7 @@
     ../../users/saifr/configuration.nix
     ../../modules
   ];
+
   mySetups.ollama.enable = true;
+  mySetups.thinkpad-sops.enable = true;
 }

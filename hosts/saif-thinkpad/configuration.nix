@@ -11,5 +11,6 @@
   ];
 
   mySetups.ollama.enable = true;
-  mySetups.thinkpad-sops.enable = true;
+  # mySetups.thinkpad-sops.enable = true;
+  mySetups.vertex.enable = true;
 }

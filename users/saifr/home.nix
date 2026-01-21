@@ -21,6 +21,7 @@ in
 
   home.packages = with pkgs; [
     xdotool
+    libreoffice-fresh
     gcc
     nodejs
     basedpyright

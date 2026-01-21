@@ -199,4 +199,5 @@ in
   };
 
   home.file.".config/i3/config".text = builtins.readFile ./i3-config;
+  home.file.".config/libreoffice/4/user/registrymodifications.xcu".source = ./registrymodifications.xcu;
 }

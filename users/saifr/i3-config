@@ -27,7 +27,7 @@ floating_modifier $mod
 bindsym $mod+r kill
 
 # start dmenu (a program launcher)
-bindsym $mod+e exec --no-startup-id dmenu_run
+#bindsym $mod+e exec --no-startup-id dmenu_run
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -131,6 +131,9 @@ bar {
         status_command i3status
 	tray_output primary
 }
+
+
+bindsym $mod+e exec --no-startup-id env PATH="$HOME/bin/chrome-sync:$PATH" dmenu_run
 
 bindsym $mod+q exec --no-startup-id google-chrome-stable --new-window --profile-directory="Default"
 

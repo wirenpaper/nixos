@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 let 
+  erd-go = import ./erd-go.nix { inherit pkgs; };
   qwen-agent = import ./qwen-agent.nix { inherit pkgs; };
 in
 {
@@ -13,6 +14,10 @@ in
 
   home.shellAliases = {
     theme = "~/.config/config-manager/theme.sh";
+
+    dbdraw = "RULES=\"s|>id |>[PK] id |g; s|>([a-z0-9_]+_id) |>[FK] \\1 |g;\"; for c in \$(sqlite3 project.db \"SELECT ii.name FROM sqlite_master m, pragma_index_list(m.name) il, pragma_index_info(il.name) ii WHERE il.\\\"unique\\\" = 1 AND il.origin != 'pk' AND m.type = 'table'\" | sort -u); do RULES=\"\${RULES} s|>\${c} |>(U) \${c} |g;\"; done; for c in \$(sqlite3 project.db \"SELECT p.name FROM sqlite_master m, pragma_table_info(m.name) p WHERE p.\\\"notnull\\\" = 1 AND m.type = 'table' AND p.name != 'id' AND p.name NOT LIKE '%_id'\" | sort -u); do RULES=\"\${RULES} s|>\\(U\\) \${c} |>(U)* \${c} |g; s|>\${c} |>* \${c} |g;\"; done; tbls out \"sqlite:///$(pwd)/project.db\" --format dot | sed -E \"\${RULES} s|taillabel=<<table.*table>>||g\" | dot -Tpng -Gsplines=polyline -Grankdir=LR -Gnodesep=1 -Granksep=1 -o schema.png && timg --upscale schema.png";
+
+    dbdraw-dark = "RULES=\"s|>id |>[PK] id |g; s|>([a-z0-9_]+_id) |>[FK] \\1 |g;\"; for c in \$(sqlite3 project.db \"SELECT ii.name FROM sqlite_master m, pragma_index_list(m.name) il, pragma_index_info(il.name) ii WHERE il.\\\"unique\\\" = 1 AND il.origin != 'pk' AND m.type = 'table'\" | sort -u); do RULES=\"\${RULES} s|>\${c} |>(U) \${c} |g;\"; done; for c in \$(sqlite3 project.db \"SELECT p.name FROM sqlite_master m, pragma_table_info(m.name) p WHERE p.\\\"notnull\\\" = 1 AND m.type = 'table' AND p.name != 'id' AND p.name NOT LIKE '%_id'\" | sort -u); do RULES=\"\${RULES} s|>\\(U\\) \${c} |>(U)* \${c} |g; s|>\${c} |>* \${c} |g;\"; done; tbls out \"sqlite:///$(pwd)/project.db\" --format dot | sed -E \"s|bgcolor=\\\"[^\\\"]*\\\"||g; s|<table|<table bgcolor=\\\"#252525\\\"|g; \${RULES} s|taillabel=<<table.*table>>||g\" | dot -Tpng -Gbgcolor='#181818' -Nfontcolor='#ffaf00' -Ncolor='#181818' -Ecolor='#666666' -Gsplines=polyline -Grankdir=LR -Gnodesep=1 -Granksep=1 -o schema.png && timg --upscale schema.png";
   };
 
   programs.gemini-cli = {
@@ -20,11 +25,21 @@ in
   };
 
   home.packages = with pkgs; [
+
+    sqlite
+    graphviz
+    erd-go 
+    tbls
+    tmux
+
     xdotool
     libreoffice-fresh
     gcc
     nodejs
+
     basedpyright
+    sqls
+
     xdg-utils
     xwininfo
     slack
@@ -188,6 +203,7 @@ in
         p.vim 
         p.vimdoc 
         p.query 
+	p.sql
       ]))
     ];
 
@@ -200,4 +216,5 @@ in
 
   home.file.".config/i3/config".text = builtins.readFile ./i3-config;
   home.file.".config/libreoffice/4/user/registrymodifications.xcu".source = ./registrymodifications.xcu;
+  home.file.".tmux.conf".source = ./tmux.conf;
 }
